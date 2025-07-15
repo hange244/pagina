@@ -14,3 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+document.addEventListener("DOMContentLoaded", function () {
+    const menuButton = document.getElementById("hamburger-menu");
+    const nav = document.querySelector(".main-nav");
+
+    menuButton.addEventListener("click", () => {
+        nav.classList.toggle("active");
+    });
+});

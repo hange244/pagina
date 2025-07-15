@@ -459,4 +459,61 @@ body {
 .instagram-button:active {
     transform: translateY(0);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}/* Estilo base del menú */
+.main-nav {
+    display: flex;
+    gap: 1rem;
+}
+
+.hamburger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.hamburger-menu span {
+    display: block;
+    height: 4px;
+    background-color: #333;
+    border-radius: 2px;
+}
+
+/* Versión móvil */
+@media (max-width: 768px) {
+    .main-nav {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background-color: white;
+        padding: 1rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        z-index: 10;
+    }
+
+    .main-nav.active {
+        display: flex;
+    }
+
+    .hamburger-menu {
+        display: flex;
+        z-index: 20; /* Asegura que esté sobre el nav, pero no sobre las letras */
+    }
+
+    .nav-links li {
+        margin: 0.5rem 0;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        font-size: 1.1rem;
+        color: #333;
+    }
 }
