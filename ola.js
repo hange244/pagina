@@ -1,18 +1,16 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     const hamburgerMenu = document.getElementById('hamburger-menu');
     const navLinks = document.querySelector('.nav-links');
 
-    hamburgerMenu.addEventListener('click', function() {
-        // Alterna la clase 'active' para mostrar/ocultar el menú
+    // Abre/cierra el menú en móviles
+    hamburgerMenu.addEventListener('click', () => {
         navLinks.classList.toggle('active');
     });
 
-    
+    // Cierra el menú cuando haces clic en un enlace (en móviles)
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', () => {
-            if (navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
-            }
+            navLinks.classList.remove('active');
         });
     });
 });

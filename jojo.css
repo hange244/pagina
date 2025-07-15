@@ -1,11 +1,11 @@
 /* --- Variables y Estilos Globales --- */
 :root {
-    --primary-blue: #40dcf4;
-    --accent-coral: #ff5858;
+    --primary-blue: #11d2e7;
+    --accent-coral: #ff773df6;
     --light-gray-bg: #F4F4F9;
-    --dark-text: #333333;
+    --dark-text: #12223e;
     --white-color: #ffffff;
-    --border-color: #EAEAEA;
+    --border-color: #eaeaea;
     --font-family: 'Poppins', sans-serif;
 }
 .logo {
