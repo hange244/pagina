@@ -1,806 +1,872 @@
-   /* --- Variables y Estilos Globales --- */
-        :root {
-            --primary-blue: #02c6dc;
-            --accent-coral: #f83535;
-            --light-gray-bg: #F4F4F9;
-            --dark-text: #12223e;
-            --white-color: #ffffff;
-            --border-color: #eaeaea;
-            --font-family: 'Poppins', sans-serif;
-            --header-height: 80px;
-            --shadow-light: 0 2px 10px rgba(0,0,0,0.08);
-            --shadow-medium: 0 4px 20px rgba(0,0,0,0.12);
-            --shadow-heavy: 0 8px 30px rgba(0,0,0,0.15);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: calc(var(--header-height) + 20px);
-        }
-
-        body {
-            font-family: var(--font-family);
-            color: var(--dark-text);
-            background-color: var(--white-color);
-            line-height: 1.6;
-            overflow-x: hidden;
-            padding-top: var(--header-height);
-        }
-
-        /* Tipografía Responsiva */
-        h1 { 
-            font-size: clamp(2.2rem, 6vw, 3.5rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-        h2 { 
-            font-size: clamp(1.8rem, 4.5vw, 2.5rem);
-            font-weight: 600;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-        h3 { 
-            font-size: clamp(1.3rem, 3vw, 1.6rem);
-            font-weight: 600;
-            margin-bottom: 0.8rem;
-        }
-
-        .section-intro {
-            text-align: center;
-            font-size: clamp(1rem, 2.2vw, 1.1rem);
-            color: #666;
-            margin-bottom: 3rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Animaciones */
-        .product-section {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-        .product-section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- Header Mejorado --- */
-        .main-header {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
-            box-shadow: var(--shadow-light);
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            height: var(--header-height);
-            border-bottom: 1px solid rgba(2, 198, 220, 0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-            height: 100%;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: var(--primary-blue);
-            transition: transform 0.3s ease;
-        }
-
-        .logo-container:hover {
-            transform: scale(1.02);
-        }
-
-        .logo {
-            height: 45px;
-            width: 45px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 12px;
-            transition: transform 0.3s ease;
-            border: 2px solid var(--primary-blue);
-        }
-
-        .company-name {
-            font-size: 1.6rem;
-            font-weight: 700;
-            background: linear-gradient(45deg, var(--primary-blue), var(--accent-coral));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .main-nav {
-            display: flex;
-            align-items: center;
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            margin: 0;
-            padding: 0;
-            gap: 0.5rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark-text);
-            padding: 0.6rem 1rem;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            position: relative;
-            border-radius: 8px;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-coral);
-            background-color: rgba(248, 53, 53, 0.05);
-            transform: translateY(-1px);
-        }
-
-        /* Menú Hamburguesa Mejorado */
-        .hamburger-menu {
-            display: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            flex-direction: column;
-            gap: 4px;
-            z-index: 1001;
-            padding: 8px;
-            border-radius: 6px;
-            transition: background-color 0.3s ease;
-        }
-
-        .hamburger-menu:hover {
-            background-color: rgba(2, 198, 220, 0.1);
-        }
-
-        .hamburger-menu span {
-            display: block;
-            width: 24px;
-            height: 3px;
-            background-color: var(--primary-blue);
-            border-radius: 3px;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger-menu.active span:nth-child(1) { 
-            transform: translateY(7px) rotate(45deg); 
-        }
-        .hamburger-menu.active span:nth-child(2) { 
-            opacity: 0; 
-        }
-        .hamburger-menu.active span:nth-child(3) { 
-            transform: translateY(-7px) rotate(-45deg); 
-        }
-
-        /* --- Sección Hero Mejorada --- */
-        .hero {
-            background: linear-gradient(135deg, 
-                rgba(2, 198, 220, 0.1) 0%, 
-                rgba(248, 53, 53, 0.05) 50%,
-                rgba(2, 198, 220, 0.08) 100%);
-            text-align: center;
-            padding: clamp(4rem, 12vh, 8rem) 2rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 65vh;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(2, 198, 220, 0.03) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .hero-content {
-            max-width: 800px;
-            animation: fadeInUp 1s ease-out;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--dark-text) 0%, var(--primary-blue) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            font-size: clamp(1.1rem, 2.8vw, 1.3rem);
-            margin-bottom: 2.5rem;
-            color: #666;
-            font-weight: 300;
-        }
-
-        /* --- Secciones de Producto Mejoradas --- */
-        .product-section {
-            padding: clamp(4rem, 10vw, 6rem) 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .product-section:nth-child(even) {
-            background-color: var(--light-gray-bg);
-        }
-
-        .product-item {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
-            gap: 4rem;
-            margin-top: 2rem;
-        }
-
-        .alt-layout .product-item {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .alt-layout .product-item .product-description {
-            grid-column: 1;
-            grid-row: 1;
-        }
-
-        .alt-layout .product-item .product-gallery {
-            grid-column: 2;
-        }
-
-        .product-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1.2rem;
-        }
-
-        .product-gallery img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 16px;
-            box-shadow: var(--shadow-medium);
-            transition: all 0.4s ease;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .product-gallery img:hover {
-            transform: scale(1.05) translateY(-8px);
-            box-shadow: var(--shadow-heavy);
-            border-color: var(--primary-blue);
-        }
-
-        .product-description {
-            padding: 1rem 0;
-        }
-
-        .product-description p {
-            font-size: 1.05rem;
-            line-height: 1.7;
-            color: #555;
-            margin-bottom: 2rem;
-        }
-
-        /* --- Botón CTA Mejorado --- */
-        .cta-button {
-            background: linear-gradient(135deg, var(--accent-coral) 0%, #ff6b4a 100%);
-            color: var(--white-color);
-            border: none;
-            border-radius: 50px;
-            padding: 16px 32px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(248, 53, 53, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .cta-button:hover::before {
-            left: 100%;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(248, 53, 53, 0.4);
-        }
-
-        .cta-button:active {
-            transform: translateY(0);
-        }
-
-        /* --- Footer Completamente Rediseñado --- */
-        .main-footer {
-            background: linear-gradient(135deg, #1a1a2e 0%, var(--dark-text) 50%, #0f0f23 100%);
-            color: var(--light-gray-bg);
-            padding: 5rem 2rem 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .main-footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-blue), var(--accent-coral), var(--primary-blue));
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto 3rem auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 3rem;
-            text-align: left;
-        }
-
-        .footer-info h3,
-        .footer-contact h3 {
-            color: var(--primary-blue);
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-            font-size: 1.4rem;
-            position: relative;
-        }
-
-        .footer-info h3::after,
-        .footer-contact h3::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 40px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary-blue), var(--accent-coral));
-            border-radius: 2px;
-        }
-
-        .footer-info p,
-        .footer-contact p {
-            margin: 0.8rem 0;
-            line-height: 1.6;
-            color: #b0b0b0;
-        }
-
-        .footer-info p:first-of-type {
-            color: var(--white-color);
-            font-weight: 500;
-            font-size: 1.1rem;
-        }
-
-        .footer-info p i {
-            color: var(--accent-coral);
-            margin-right: 10px;
-            width: 20px;
-        }
-
-        /* Sección de Redes Sociales Mejorada */
-        .footer-social {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 2rem;
-        }
-
-        .footer-social h3 {
-            color: var(--primary-blue);
-            margin-bottom: 1rem;
-            font-size: 1.4rem;
-            position: relative;
-        }
-
-        .footer-social h3::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary-blue), var(--accent-coral));
-            border-radius: 2px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-        }
-
-        .social-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            text-decoration: none;
-            color: white;
-            font-size: 1.4rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .social-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            transform: scale(0);
-            transition: transform 0.3s ease;
-        }
-
-        .social-link:hover::before {
-            transform: scale(1);
-        }
-
-        .social-link i {
-            position: relative;
-            z-index: 1;
-        }
-
-        .whatsapp-link {
-            background: linear-gradient(135deg, #25D366, #128C7E);
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-        }
-
-        .whatsapp-link::before {
-            background: #1DA851;
-        }
-
-        .whatsapp-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
-        }
-
-        .instagram-link {
-            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-            box-shadow: 0 4px 15px rgba(188, 24, 136, 0.3);
-        }
-
-        .instagram-link::before {
-            background: linear-gradient(45deg, #d6831f, #c5572a, #b91f36, #a91e56, #9b1577);
-        }
-
-        .instagram-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(188, 24, 136, 0.4);
-        }
-
-        .footer-copyright {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 2rem;
-            text-align: center;
-            font-size: 0.9rem;
-            color: #888;
-            position: relative;
-        }
-
-        /* --- Botones Flotantes Mejorados --- */
-        .floating-buttons-container {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .floating-btn {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            color: white;
-            font-size: 24px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .floating-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(0);
-            transition: transform 0.3s ease;
-        }
-
-        .floating-btn:hover::before {
-            transform: scale(1);
-        }
-
-        .floating-btn:hover {
-            transform: scale(1.1) translateY(-2px);
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .whatsapp-btn {
-            background: linear-gradient(135deg, #25D366, #128C7E);
-            animation: pulse 2s infinite;
-        }
-
-        .instagram-btn {
-            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3); }
-            50% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.6); }
-            100% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3); }
-        }
-
-        /* Animaciones */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* --- RESPONSIVIDAD MEJORADA --- */
-        @media (max-width: 768px) {
-            :root {
-                --header-height: 70px;
-            }
-
-            body {
-                padding-top: var(--header-height);
-            }
-
-            .header-container {
-                padding: 0 1.5rem;
-            }
-
-            .company-name {
-                font-size: 1.4rem;
-            }
-
-            .logo {
-                height: 40px;
-                width: 40px;
-            }
-
-            .main-nav {
-                position: fixed;
-                top: 0;
-                right: 0;
-                height: 100vh;
-                width: 85%;
-                max-width: 320px;
-                background: linear-gradient(135deg, rgba(18, 34, 62, 0.98), rgba(18, 34, 62, 0.95));
-                backdrop-filter: blur(20px);
-                transform: translateX(100%);
-                transition: transform 0.3s ease-in-out;
-                z-index: 999;
-            }
-
-            .main-nav.active {
-                transform: translateX(0);
-            }
-
-            .nav-links {
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                height: 100%;
-                gap: 1.5rem;
-                padding: 2rem;
-            }
-
-            .nav-links a {
-                color: var(--white-color);
-                font-size: 1.1rem;
-                padding: 1rem 1.5rem;
-                border-radius: 12px;
-                width: 100%;
-                text-align: center;
-                background: rgba(255, 255, 255, 0.05);
-            }
-
-            .nav-links a:hover {
-                background: rgba(248, 53, 53, 0.2);
-                transform: translateX(5px);
-            }
-
-            .hamburger-menu {
-                display: flex;
-            }
-
-            body.no-scroll {
-                overflow: hidden;
-            }
-
-            /* Hero móvil */
-            .hero {
-                padding: 3rem 1.5rem;
-                min-height: 50vh;
-            }
-
-            .hero p {
-                margin-bottom: 2rem;
-            }
-
-            /* Secciones móviles */
-            .product-section {
-                padding: 3rem 1.5rem;
-            }
-
-            .product-item,
-            .alt-layout .product-item {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
-                text-align: center;
-            }
-
-            .alt-layout .product-item .product-description {
-                grid-row: 2;
-            }
-
-            .product-gallery {
-                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-                gap: 1rem;
-            }
-
-            .product-gallery img {
-                height: 160px;
-                border-radius: 12px;
-            }
-
-            /* Footer móvil */
-            .main-footer {
-                padding: 3rem 1.5rem 2rem;
-            }
-
-            .footer-container {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
-                text-align: center;
-            }
-
-            .footer-info h3::after,
-            .footer-contact h3::after {
-                left: 50%;
-                transform: translateX(-50%);
-            }
-
-            .social-links {
-                gap: 2rem;
-            }
-
-            .social-link {
-                width: 55px;
-                height: 55px;
-                font-size: 1.5rem;
-            }
-
-            /* Botones flotantes móviles */
-            .floating-buttons-container {
-                bottom: 20px;
-                right: 20px;
-                gap: 10px;
-            }
-
-            .floating-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero {
-                padding: 2.5rem 1rem;
-            }
-
-            .product-section {
-                padding: 2.5rem 1rem;
-            }
-
-            .product-gallery {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .floating-buttons-container {
-                bottom: 15px;
-                right: 15px;
-            }
-
-            .cta-button {
-                padding: 14px 24px;
-                font-size: 0.9rem;
-            }
-        }
-
-        /* Mejoras adicionales de accesibilidad */
-        @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-
-        /* Mejora del contraste para modo oscuro */
-        @media (prefers-color-scheme: dark) {
-            .section-intro {
-                color: #888;
-            }
-            
-            .product-description p {
-                color: #777;
-            }
-        }
+/* --- Variables y Estilos Globales --- */
+:root {
+    --primary-blue: #02c6dc;
+    --accent-coral: #f83535;
+    --light-gray-bg: #F4F4F9;
+    --dark-text: #12223e;
+    --white-color: #ffffff;
+    --border-color: #eaeaea;
+    --font-family: 'Poppins', sans-serif;
+    --header-height: 80px;
+    --shadow-light: 0 2px 10px rgba(0,0,0,0.08);
+    --shadow-medium: 0 4px 20px rgba(0,0,0,0.12);
+    --shadow-heavy: 0 8px 30px rgba(0,0,0,0.15);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-height) + 20px);
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--dark-text);
+    background-color: var(--white-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+    padding-top: var(--header-height);
+}
+
+/* Tipografía Responsiva */
+h1 { 
+    font-size: clamp(2.2rem, 6vw, 3.5rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+h2 { 
+    font-size: clamp(1.8rem, 4.5vw, 2.5rem);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+h3 { 
+    font-size: clamp(1.3rem, 3vw, 1.6rem);
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+}
+
+.section-intro {
+    text-align: center;
+    font-size: clamp(1rem, 2.2vw, 1.1rem);
+    color: #666;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Animaciones */
+.product-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.product-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Header Mejorado --- */
+.main-header {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    box-shadow: var(--shadow-light);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: var(--header-height);
+    border-bottom: 1px solid rgba(2, 198, 220, 0.1);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 100%;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--primary-blue);
+    transition: transform 0.3s ease;
+}
+
+.logo-container:hover {
+    transform: scale(1.02);
+}
+
+.logo {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 12px;
+    transition: transform 0.3s ease;
+    border: 2px solid var(--primary-blue);
+}
+
+.company-name {
+    font-size: 1.6rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, var(--primary-blue), var(--accent-coral));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    gap: 0.5rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--dark-text);
+    padding: 0.6rem 1rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    position: relative;
+    border-radius: 8px;
+}
+
+.nav-links a:hover {
+    color: var(--accent-coral);
+    background-color: rgba(248, 53, 53, 0.05);
+    transform: translateY(-1px);
+}
+
+/* Menú Hamburguesa Mejorado */
+.hamburger-menu {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 1001;
+    padding: 8px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.hamburger-menu:hover {
+    background-color: rgba(2, 198, 220, 0.1);
+}
+
+.hamburger-menu span {
+    display: block;
+    width: 24px;
+    height: 3px;
+    background-color: var(--primary-blue);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.hamburger-menu.active span:nth-child(1) { 
+    transform: translateY(7px) rotate(45deg); 
+}
+.hamburger-menu.active span:nth-child(2) { 
+    opacity: 0; 
+}
+.hamburger-menu.active span:nth-child(3) { 
+    transform: translateY(-7px) rotate(-45deg); 
+}
+
+/* --- Sección Hero Mejorada --- */
+.hero {
+    background: linear-gradient(135deg, 
+        rgba(2, 198, 220, 0.1) 0%, 
+        rgba(248, 53, 53, 0.05) 50%,
+        rgba(2, 198, 220, 0.08) 100%);
+    text-align: center;
+    padding: clamp(4rem, 12vh, 8rem) 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 65vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(2, 198, 220, 0.03) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.hero-content {
+    max-width: 800px;
+    animation: fadeInUp 1s ease-out;
+    position: relative;
+    z-index: 1;
+}
+
+.hero h1 {
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, var(--dark-text) 0%, var(--primary-blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero p {
+    font-size: clamp(1.1rem, 2.8vw, 1.3rem);
+    margin-bottom: 2.5rem;
+    color: #666;
+    font-weight: 300;
+}
+
+/* --- Secciones de Producto Mejoradas --- */
+.product-section {
+    padding: clamp(4rem, 10vw, 6rem) 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.product-section:nth-child(even) {
+    background-color: var(--light-gray-bg);
+}
+
+.product-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 4rem;
+    margin-top: 2rem;
+}
+
+.alt-layout .product-item {
+    grid-template-columns: 1fr 1fr;
+}
+
+.alt-layout .product-item .product-description {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.alt-layout .product-item .product-gallery {
+    grid-column: 2;
+}
+
+/* ARREGLO PRINCIPAL: Galería de productos responsive */
+.product-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.2rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+.product-gallery img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 16px;
+    box-shadow: var(--shadow-medium);
+    transition: all 0.4s ease;
+    border: 1px solid rgba(0,0,0,0.05);
+    max-width: 100%;
+    display: block;
+}
+
+.product-gallery img:hover {
+    transform: scale(1.05) translateY(-8px);
+    box-shadow: var(--shadow-heavy);
+    border-color: var(--primary-blue);
+}
+
+.product-description {
+    padding: 1rem 0;
+    width: 100%;
+}
+
+.product-description p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 2rem;
+}
+
+/* --- Botón CTA Mejorado --- */
+.cta-button {
+    background: linear-gradient(135deg, var(--accent-coral) 0%, #ff6b4a 100%);
+    color: var(--white-color);
+    border: none;
+    border-radius: 50px;
+    padding: 16px 32px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(248, 53, 53, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.cta-button:hover::before {
+    left: 100%;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(248, 53, 53, 0.4);
+}
+
+.cta-button:active {
+    transform: translateY(0);
+}
+
+/* --- Footer Completamente Rediseñado --- */
+.main-footer {
+    background: linear-gradient(135deg, #1a1a2e 0%, var(--dark-text) 50%, #0f0f23 100%);
+    color: var(--light-gray-bg);
+    padding: 5rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.main-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-blue), var(--accent-coral), var(--primary-blue));
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto 3rem auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 3rem;
+    text-align: left;
+}
+
+.footer-info h3,
+.footer-contact h3 {
+    color: var(--primary-blue);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    font-size: 1.4rem;
+    position: relative;
+}
+
+.footer-info h3::after,
+.footer-contact h3::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-blue), var(--accent-coral));
+    border-radius: 2px;
+}
+
+.footer-info p,
+.footer-contact p {
+    margin: 0.8rem 0;
+    line-height: 1.6;
+    color: #b0b0b0;
+}
+
+.footer-info p:first-of-type {
+    color: var(--white-color);
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.footer-info p i {
+    color: var(--accent-coral);
+    margin-right: 10px;
+    width: 20px;
+}
+
+/* Sección de Redes Sociales Mejorada */
+.footer-social {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+}
+
+.footer-social h3 {
+    color: var(--primary-blue);
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    position: relative;
+}
+
+.footer-social h3::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-blue), var(--accent-coral));
+    border-radius: 2px;
+}
+
+.social-links {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    text-decoration: none;
+    color: white;
+    font-size: 1.4rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.3s ease;
+}
+
+.social-link:hover::before {
+    transform: scale(1);
+}
+
+.social-link i {
+    position: relative;
+    z-index: 1;
+}
+
+.whatsapp-link {
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+.whatsapp-link::before {
+    background: #1DA851;
+}
+
+.whatsapp-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+.instagram-link {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    box-shadow: 0 4px 15px rgba(188, 24, 136, 0.3);
+}
+
+.instagram-link::before {
+    background: linear-gradient(45deg, #d6831f, #c5572a, #b91f36, #a91e56, #9b1577);
+}
+
+.instagram-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(188, 24, 136, 0.4);
+}
+
+.footer-copyright {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 2rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #888;
+    position: relative;
+}
+
+/* --- Botones Flotantes Mejorados --- */
+.floating-buttons-container {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.floating-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.floating-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(0);
+    transition: transform 0.3s ease;
+}
+
+.floating-btn:hover::before {
+    transform: scale(1);
+}
+
+.floating-btn:hover {
+    transform: scale(1.1) translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+}
+
+.whatsapp-btn {
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    animation: pulse 2s infinite;
+}
+
+.instagram-btn {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3); }
+    50% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.6); }
+    100% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3); }
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- RESPONSIVIDAD MEJORADA Y ARREGLOS CRÍTICOS --- */
+@media (max-width: 1024px) {
+    .product-item {
+        gap: 3rem;
+    }
+    
+    .product-gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .product-gallery img {
+        height: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --header-height: 70px;
+    }
+
+    body {
+        padding-top: var(--header-height);
+    }
+
+    .header-container {
+        padding: 0 1.5rem;
+    }
+
+    .company-name {
+        font-size: 1.4rem;
+    }
+
+    .logo {
+        height: 40px;
+        width: 40px;
+    }
+
+    .main-nav {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 85%;
+        max-width: 320px;
+        background: linear-gradient(135deg, rgba(18, 34, 62, 0.98), rgba(18, 34, 62, 0.95));
+        backdrop-filter: blur(20px);
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+        z-index: 999;
+    }
+
+    .main-nav.active {
+        transform: translateX(0);
+    }
+
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        gap: 1.5rem;
+        padding: 2rem;
+    }
+
+    .nav-links a {
+        color: var(--white-color);
+        font-size: 1.1rem;
+        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        width: 100%;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-links a:hover {
+        background: rgba(248, 53, 53, 0.2);
+        transform: translateX(5px);
+    }
+
+    .hamburger-menu {
+        display: flex;
+    }
+
+    body.no-scroll {
+        overflow: hidden;
+    }
+
+    /* Hero móvil */
+    .hero {
+        padding: 3rem 1.5rem;
+        min-height: 50vh;
+    }
+
+    .hero p {
+        margin-bottom: 2rem;
+    }
+
+    /* ARREGLO CRÍTICO: Secciones móviles */
+    .product-section {
+        padding: 3rem 1.5rem;
+    }
+
+    .product-item,
+    .alt-layout .product-item {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        text-align: center;
+    }
+
+    .alt-layout .product-item .product-description {
+        grid-column: 1;
+        grid-row: 2;
+        order: 2;
+    }
+
+    .alt-layout .product-item .product-gallery {
+        grid-column: 1;
+        grid-row: 1;
+        order: 1;
+    }
+
+    /* ARREGLO CRÍTICO: Galería móvil */
+    .product-gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        max-width: 100%;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .product-gallery img {
+        height: 160px;
+        border-radius: 12px;
+        width: 100%;
+        max-width: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    /* Footer móvil */
+    .main-footer {
+        padding: 3rem 1.5rem 2rem;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        text-align: center;
+    }
+
+    .footer-info h3::after,
+    .footer-contact h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .social-links {
+        gap: 2rem;
+    }
+
+    .social-link {
+        width: 55px;
+        height: 55px;
+        font-size: 1.5rem;
+    }
+
+    /* Botones flotantes móviles */
+    .floating-buttons-container {
+        bottom: 20px;
+        right: 20px;
+        gap: 10px;
+    }
+
+    .floating-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 2.5rem 1rem;
+    }
+
+    .product-section {
+        padding: 2.5rem 1rem;
+    }
+
+    /* ARREGLO ADICIONAL: Dispositivos muy pequeños */
+    .product-gallery {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+
+    .product-gallery img {
+        height: 180px;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .floating-buttons-container {
+        bottom: 15px;
+        right: 15px;
+    }
+
+    .cta-button {
+        padding: 14px 24px;
+        font-size: 0.9rem;
+    }
+}
+
+/* NUEVO: Arreglo específico para imágenes que se estiran */
+@media (max-width: 600px) {
+    .product-gallery {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .product-gallery img {
+        max-width: 90%;
+        width: auto;
+        height: 200px;
+        object-fit: contain;
+        object-position: center;
+    }
+}
+
+/* Mejoras adicionales de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Mejora del contraste para modo oscuro */
+@media (prefers-color-scheme: dark) {
+    .section-intro {
+        color: #888;
+    }
+    
+    .product-description p {
+        color: #777;
+    }
+}
